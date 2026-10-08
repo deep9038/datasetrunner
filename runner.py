@@ -3,6 +3,7 @@ import csv
 import json
 import os
 import random
+import re
 import sys
 import time
 import urllib.error
@@ -15,8 +16,11 @@ COMFY_URL = "http://127.0.0.1:8188"
 WORKFLOW_FILE = "workflow_api.json"
 PROMPTS_FILE = "prompts.txt"
 LOG_FILE = "dataset_log.csv"
-REFERENCE_IMAGE = "ComfyUI_00060_.png"   # face image, must be in ComfyUI/input
-SEEDS_PER_PROMPT = 2
+REFERENCE_IMAGE = "ComfyUI_00060_.png"   # default face image, must be in ComfyUI/input
+                                         # a "# reference: file.png" line in the prompts file switches it
+BATCH = "b3"   # change for each new prompts file so names never collide
+OUTPUT_DIR = "dataset"   # folder inside ComfyUI/output
+SEEDS_PER_PROMPT = 1
 MAX_PENDING = 5
 CHECK_EVERY = 10
 PLACEHOLDER = "__PROMPT__"
@@ -29,9 +33,14 @@ SIZES = {
 
 def load_prompts(path):
     items = []
+    ref = REFERENCE_IMAGE
     with open(path, encoding="utf-8") as f:
         for line in f:
             line = line.strip()
+            m = re.match(r"#\s*reference:\s*(.+)", line, re.IGNORECASE)
+            if m:
+                ref = m.group(1).strip()
+                continue
             if not line or line.startswith("#"):
                 continue
             if "|" in line:
@@ -42,11 +51,11 @@ def load_prompts(path):
             if size not in SIZES:
                 print(f"  Unknown size '{size}', using square")
                 size = "square"
-            items.append((size, text))
+            items.append((size, text, ref))
     return items
 
 
-def build_job(base, text, size, seed, prefix):
+def build_job(base, text, size, seed, prefix, ref):
     wf = copy.deepcopy(base)
     w, h = SIZES[size]
     for node in wf.values():
@@ -61,7 +70,7 @@ def build_job(base, text, size, seed, prefix):
         elif ctype == "SaveImage":
             inp["filename_prefix"] = prefix
         elif ctype == "LoadImage":
-            inp["image"] = REFERENCE_IMAGE
+            inp["image"] = ref
     return wf
 
 
@@ -120,8 +129,9 @@ def main():
             pending_count()
         except urllib.error.URLError as e:
             sys.exit(f"Can't reach ComfyUI at {COMFY_URL} ({e}). Is it running? Check the port.")
-        if not input_image_exists(REFERENCE_IMAGE):
-            sys.exit(f"Reference image '{REFERENCE_IMAGE}' not found in ComfyUI/input.")
+        for ref in sorted({r for _, _, r in prompts}):
+            if not input_image_exists(ref):
+                sys.exit(f"Reference image '{ref}' not found in ComfyUI/input.")
         new_log = not os.path.exists(LOG_FILE)
         logf = open(LOG_FILE, "a", newline="", encoding="utf-8")
         log = csv.writer(logf)
@@ -129,21 +139,21 @@ def main():
             log.writerow(["file_prefix", "size", "seed", "prompt"])
  
     count = 0
-    for i, (size, text) in enumerate(prompts, 1):
+    for i, (size, text, ref) in enumerate(prompts, 1):
         for s in range(1, SEEDS_PER_PROMPT + 1):
             count += 1
-            prefix = f"dataset/p{i:03d}_{size}_s{s}"
+            prefix = f"{OUTPUT_DIR}/{BATCH}_p{i:03d}_{size}_s{s}"
             if prefix in done:
                 continue
  
             seed = random.randint(1, 2**31 - 1)
-            job = build_job(base, text, size, seed, prefix)
+            job = build_job(base, text, size, seed, prefix, ref)
 
             if DRY_RUN:
                 name = f"dryrun_{i:03d}_s{s}.json"
                 with open(name, "w", encoding="utf-8") as f:
                     json.dump(job, f, indent=2)
-                print(f"  [{count}/{total}] saved {name} ({size}, seed {seed})")
+                print(f"  [{count}/{total}] saved {name} ({size}, seed {seed}, {ref})")
                 continue
 
             # wait until ComfyUI's queue has room
@@ -153,14 +163,14 @@ def main():
             send_job(job)
             log.writerow([prefix, size, seed, text])
             logf.flush()   # write immediately so a crash doesn't lose the log
-            print(f"  [{count}/{total}] queued {prefix}")
+            print(f"  [{count}/{total}] queued {prefix} ({ref})")
 
     if not DRY_RUN:
         logf.close()
         print("All jobs queued. Waiting for ComfyUI to finish...")
         while pending_count() > 0:
             time.sleep(CHECK_EVERY)
-        print("Done! Images are in ComfyUI/output/dataset/")
+        print(f"Done! Images are in ComfyUI/output/{OUTPUT_DIR}/")
 if __name__ == "__main__":
     try:
         main()
