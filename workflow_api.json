@@ -31,7 +31,7 @@
   },
   "4": {
     "inputs": {
-      "image": "example.png"
+      "image": "ComfyUI_00060_.png"
     },
     "class_type": "LoadImage",
     "_meta": {
