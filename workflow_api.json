@@ -1,7 +1,7 @@
 {
   "1": {
     "inputs": {
-      "unet_name": "flux-2-klein-4b/flux-2-klein-4b.safetensors",
+      "unet_name": "FLUX.2 KLIN 9B f8\\flux-2-klein-9b-fp8.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
@@ -11,7 +11,7 @@
   },
   "2": {
     "inputs": {
-      "clip_name": "qwen_3_4b/qwen_3_4b.safetensors",
+      "clip_name": "qwen_3_8b_f8\\qwen_3_8b_fp8mixed.safetensors",
       "type": "flux2",
       "device": "default"
     },
@@ -22,7 +22,7 @@
   },
   "3": {
     "inputs": {
-      "vae_name": "full_encoder_small_decoder.safetensors"
+      "vae_name": "sdxl-defution\\full_encoder_small_decoder.safetensors"
     },
     "class_type": "VAELoader",
     "_meta": {
@@ -231,7 +231,7 @@
       "title": "VAE Decode"
     }
   },
-  "19": {
+  "18": {
     "inputs": {
       "filename_prefix": "ComfyUI",
       "images": [

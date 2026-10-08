@@ -1,41 +1,6 @@
-# Format: size | prompt      (size = square / portrait / landscape)
-# Every prompt starts with the identity lock. Edit freely; lines starting with # are ignored.
-
-# ---------- CLOSE-UPS: angles & expressions (square) ----------
-square | Keep the woman's face and identity exactly the same. Front-facing close-up portrait, neutral relaxed expression, same hairstyle, plain light grey studio background, soft even lighting, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait in three-quarter view turned to the left, soft smile, same hairstyle, warm beige wall background, soft window light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait in three-quarter view turned to the right, calm expression, same hairstyle, white background, soft studio light, photorealistic
-square | Keep the woman's face and identity exactly the same. Side profile close-up facing left, looking ahead, same hairstyle, plain dark blue background, rim light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait laughing with teeth showing, eyes slightly squinted with joy, same hairstyle, pastel yellow background, bright daylight, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait looking slightly up toward the camera, serious confident expression, same hairstyle, concrete wall background, overcast light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait looking down and to the side, thoughtful expression, same hairstyle, indoor room with warm lamp light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait, mouth slightly open mid-sentence as if talking to the camera, same hairstyle, home office background slightly blurred, natural light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait, surprised expression with raised eyebrows, same hairstyle, pastel pink background, soft light, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait looking over her shoulder at the camera, gentle smile, same hairstyle, outdoor park background, golden hour sunlight, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait wearing a red saree and small bindi, soft smile, same hairstyle, festive warm lights background, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait at night, city neon lights blurred behind her, slight smile, same hairstyle, photorealistic
-square | Keep the woman's face and identity exactly the same. Close-up portrait with hair tied in a high ponytail, neutral expression, white t-shirt, plain studio background, soft light, photorealistic
-
-# ---------- HALF-BODY (portrait) ----------
-portrait | Keep the woman's face and identity exactly the same. Half-body photo sitting at a cafe table by the window holding a coffee cup, white oversized shirt, soft smile, natural daylight, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo sitting at a desk with a laptop, explaining something with one hand raised, casual black t-shirt, modern room, soft light, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo in a pastel blue kurti, standing in front of a colorful old building, smiling, daylight, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo wearing a black blazer, arms crossed, confident expression, office background, professional lighting, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body mirror-style selfie holding a phone, casual hoodie, bedroom background, warm indoor light, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo on a balcony during golden hour, light summer dress, wind in her hair, looking at the camera, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo in gym wear holding a water bottle, light sweat, gym background, bright light, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo in a cozy sweater holding a book, sitting by a rainy window, soft grey light, calm expression, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Half-body photo with hair in a messy bun, denim jacket, street market background, candid laughing, daylight, photorealistic
-
-# ---------- FULL-BODY (portrait) ----------
-portrait | Keep the woman's face and identity exactly the same. Full-body photo walking on a city street, jeans and white sneakers, crop jacket, candid stride, daylight, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Full-body photo standing on a mountain trail, travel backpack and jacket, looking at the camera, bright clear sky, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Full-body photo on a beach at sunset, flowy white dress, barefoot on sand, soft smile, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Full-body photo in a traditional lehenga at a wedding venue, warm decorative lights, elegant pose, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Full-body photo sitting on stairs outdoors, oversized hoodie and shorts, relaxed pose, overcast light, photorealistic
-portrait | Keep the woman's face and identity exactly the same. Full-body photo at an airport terminal pulling a suitcase, travel outfit, looking at the camera, bright interior light, photorealistic
-
-# ---------- WIDE SCENES (landscape) ----------
-landscape | Keep the woman's face and identity exactly the same. Medium shot sitting in a train window seat, looking outside, soft daylight on her face, travel vibe, photorealistic
-landscape | Keep the woman's face and identity exactly the same. Medium shot recording a video on a ring-light setup at home, talking to the camera, modern creator room, photorealistic
-landscape | Keep the woman's face and identity exactly the same. Medium shot standing at a lakeside viewpoint with hills behind, light jacket, smiling at the camera, morning light, photorealistic
+# Square close-ups
+square | Keep the woman's face and identity exactly the same. Close-up head and shoulders, three-quarter left angle, soft smile, same hairstyle, mustard cotton kurti, soft window light, cozy home bedroom with blurred plants behind her, photorealistic
+# Portrait half-body
+portrait | Keep the woman's face and identity exactly the same. Half-body shot, front angle, talking mid-sentence while explaining with hands at chest level, same hairstyle, grey oversized hoodie, creator desk with laptop and ring light, warm indoor lamp light, photorealistic
+# Landscape scenes
+landscape | Keep the woman's face and identity exactly the same. Medium wide shot, three-quarter right angle, laughing, same hairstyle, olive trekking jacket and backpack, walking along an empty Himalayan mountain trail, warm golden hour light, face clearly visible, photorealistic

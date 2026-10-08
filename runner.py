@@ -1,18 +1,21 @@
 import copy 
 import csv
 import json
+import os
 import random
 import sys
 import time
 import urllib.error
+import urllib.parse
 import urllib.request
 
 
-DRY_RUN = True
-COMFY_URL = "http://127.0.0.1:8000"
+DRY_RUN = False
+COMFY_URL = "http://127.0.0.1:8188"
 WORKFLOW_FILE = "workflow_api.json"
 PROMPTS_FILE = "prompts.txt"
 LOG_FILE = "dataset_log.csv"
+REFERENCE_IMAGE = "ComfyUI_00060_.png"   # face image, must be in ComfyUI/input
 SEEDS_PER_PROMPT = 2
 MAX_PENDING = 5
 CHECK_EVERY = 10
@@ -57,6 +60,8 @@ def build_job(base, text, size, seed, prefix):
             inp["width"], inp["height"] = w, h
         elif ctype == "SaveImage":
             inp["filename_prefix"] = prefix
+        elif ctype == "LoadImage":
+            inp["image"] = REFERENCE_IMAGE
     return wf
 
 
@@ -74,6 +79,14 @@ def pending_count():
 
 def send_job(job):
     return api("/prompt", {"prompt": job})["prompt_id"]
+
+def input_image_exists(name):
+    query = urllib.parse.urlencode({"filename": name, "type": "input"})
+    try:
+        with urllib.request.urlopen(f"{COMFY_URL}/view?{query}", timeout=30):
+            return True
+    except urllib.error.HTTPError:
+        return False
 
 
 # ---------- Step 5: resume support ----------
@@ -107,6 +120,8 @@ def main():
             pending_count()
         except urllib.error.URLError as e:
             sys.exit(f"Can't reach ComfyUI at {COMFY_URL} ({e}). Is it running? Check the port.")
+        if not input_image_exists(REFERENCE_IMAGE):
+            sys.exit(f"Reference image '{REFERENCE_IMAGE}' not found in ComfyUI/input.")
         new_log = not os.path.exists(LOG_FILE)
         logf = open(LOG_FILE, "a", newline="", encoding="utf-8")
         log = csv.writer(logf)
